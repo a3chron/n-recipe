@@ -1,6 +1,17 @@
-# Welcome to your Expo app 👋
+# n-recipe
 
+A offline recipe book in a Nothing style.
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+
+# Future Plans
+
+If I suprisingly get the time to work on this enough, and it gains some traction, I might create a paid pro version of the app with some extra features,
+but it's important for me that in this case the open-source variant stays useable and active.
+
+# Contributions
+
+Contributions are welcome, just create a fork, try to use [conventional commits](https://www.conventionalcommits.org/)
+(for the branch naming too, e.g. "feat/add-some-feature"), and create a PR in the end.
 
 ## Get started
 
@@ -13,27 +24,16 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 2. Start the app
 
    ```bash
-   npx expo start
+   pnpm expo start
    ```
 
 In the output, you'll find options to open the app in a
 
 - [development build](https://docs.expo.dev/develop/development-builds/introduction/)
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
 - [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-pnpm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
 ## Learn more
 
@@ -42,9 +42,8 @@ To learn more about developing your project with Expo, look at the following res
 - [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
 - [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
-## Join the community
+<br />
 
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+<p align="center">
+ <a href="https://github.com/a3chron/n-recipe/LICENSE"><img src="https://img.shields.io/github/license/a3chron/n-recipe?colorA=363a4f&colorB=eba0ac&style=for-the-badge"></a>
+</p>
