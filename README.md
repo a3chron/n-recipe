@@ -1,68 +1,50 @@
-# n-recipe
+# Welcome to your Expo app 👋
 
-A offline recipe book in a Nothing style
+This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
-This is a [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+## Get started
 
-# Contributions
+1. Install dependencies
 
-Contributions are welcome, just create a fork, try to use [conventional commits](https://www.conventionalcommits.org/)
-(for the branch naming too, e.g. "feat/add-some-feature"), and create a PR in the end.
+   ```bash
+   pnpm install
+   ```
 
-## Future Plans
+2. Start the app
 
-If I suprisingly get the time to work on this enough, and it gains some traction, I might create a paid pro version of the app with some extra features,
-but it's important for me that in this case the open-source variant stays useable and active.
+   ```bash
+   npx expo start
+   ```
 
-I also plan on potentially bringing this to a web app, so it is possible to use it from desktop and mobile app, and sync between.
-But it'll stay local first, i.e. it will always work offline, and you can optionally sync once you're online, to use recipes on other devices too.
+In the output, you'll find options to open the app in a
 
-## Step 1: Start Metro
+- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
+- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
+- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+## Get a fresh project
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+When you're ready, run:
 
-```sh
-# Using pnpm TODO:
-pnpm start
-
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
+```bash
+pnpm run reset-project
 ```
 
-## Step 2: Build and run your app
+This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+## Learn more
 
-### Android
+To learn more about developing your project with Expo, look at the following resources:
 
-```sh
-# Using pnpm TODO:
-pnpm run android
+- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
+- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
 
-# Using npm
-npm run android
+## Join the community
 
-# OR using Yarn
-yarn android
-```
+Join our community of developers creating universal apps.
 
-If everything is set up correctly, you should see your new app running in the Android Emulator or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
+- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
