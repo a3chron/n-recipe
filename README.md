@@ -45,5 +45,5 @@ To learn more about developing your project with Expo, look at the following res
 <br />
 
 <p align="center">
- <a href="https://github.com/a3chron/n-recipe/LICENSE"><img src="https://img.shields.io/github/license/a3chron/n-recipe?colorA=363a4f&colorB=eba0ac&style=for-the-badge"></a>
+ <a href="https://github.com/a3chron/n-recipe/blob/main/LICENSE"><img src="https://img.shields.io/github/license/a3chron/n-recipe?colorA=363a4f&colorB=eba0ac&style=for-the-badge"></a>
 </p>

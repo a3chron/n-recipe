@@ -1,121 +1,135 @@
-import { Image } from "expo-image";
-import { Platform, StyleSheet } from "react-native";
-
-import { ExternalLink } from "@/components/external-link";
-import ParallaxScrollView from "@/components/parallax-scroll-view";
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { Collapsible } from "@/components/ui/collapsible";
-import { Fonts } from "@/constants/theme";
-import { Code } from "lucide-react-native";
+import { useAccentClasses } from "@/hooks/use-system-accent";
+import { router } from "expo-router";
+import { ChevronRight, Github, Palette, Scale } from "lucide-react-native";
+import { Linking, ScrollView, TouchableOpacity, useColorScheme } from "react-native";
 
-export default function TabTwoScreen() {
+const APP_VERSION = "1.0.0";
+const GITHUB_URL = "https://github.com/a3chron/n-recipe";
+
+export default function SettingsScreen() {
+  const accentClasses = useAccentClasses();
+  const colorScheme = useColorScheme()
+
+  const openGithub = () => {
+    Linking.openURL(GITHUB_URL);
+  };
+
+  const openLicence = () => {
+    Linking.openURL(GITHUB_URL + "/blob/main/LICENSE");
+  };
+
+  const openAppearanceSettings = () => {
+    router.push('/appearance-settings');
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#D0D0D0", dark: "#353636" }}
-      headerImage={
-        <Code size={210} color="#808080" style={styles.headerImage} />
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText
-          type="title"
-          style={{
-            fontFamily: Fonts.rounded,
-          }}
-        >
-          Explore
+    <ThemedView className="flex-1">
+      <ScrollView className="flex-1 p-6 pt-16">
+        <ThemedText type="title" className="mb-8">
+          Settings
         </ThemedText>
-      </ThemedView>
-      <ThemedText>
-        This app includes example code to help you get started.
-      </ThemedText>
-      <Collapsible title="File-based routing">
-        <ThemedText>
-          This app has two screens:{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          and{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/explore.tsx</ThemedText>
-        </ThemedText>
-        <ThemedText>
-          The layout file in{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/_layout.tsx</ThemedText>{" "}
-          sets up the tab navigator.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/router/introduction">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Android, iOS, and web support">
-        <ThemedText>
-          You can open this project on Android, iOS, and the web. To open the
-          web version, press <ThemedText type="defaultSemiBold">w</ThemedText>{" "}
-          in the terminal running this project.
-        </ThemedText>
-      </Collapsible>
-      <Collapsible title="Images">
-        <ThemedText>
-          For static images, you can use the{" "}
-          <ThemedText type="defaultSemiBold">@2x</ThemedText> and{" "}
-          <ThemedText type="defaultSemiBold">@3x</ThemedText> suffixes to
-          provide files for different screen densities
-        </ThemedText>
-        <Image
-          source={require("@/assets/images/react-logo.png")}
-          style={{ width: 100, height: 100, alignSelf: "center" }}
-        />
-        <ExternalLink href="https://reactnative.dev/docs/images">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Light and dark mode components">
-        <ThemedText>
-          This template has light and dark mode support. The{" "}
-          <ThemedText type="defaultSemiBold">useColorScheme()</ThemedText> hook
-          lets you inspect what the user&apos;s current color scheme is, and so
-          you can adjust UI colors accordingly.
-        </ThemedText>
-        <ExternalLink href="https://docs.expo.dev/develop/user-interface/color-themes/">
-          <ThemedText type="link">Learn more</ThemedText>
-        </ExternalLink>
-      </Collapsible>
-      <Collapsible title="Animations">
-        <ThemedText>
-          This template includes an example of an animated component. The{" "}
-          <ThemedText type="defaultSemiBold">
-            components/HelloWave.tsx
-          </ThemedText>{" "}
-          component uses the powerful{" "}
-          <ThemedText type="defaultSemiBold" style={{ fontFamily: Fonts.mono }}>
-            react-native-reanimated
-          </ThemedText>{" "}
-          library to create a waving hand animation.
-        </ThemedText>
-        {Platform.select({
-          ios: (
-            <ThemedText>
-              The{" "}
-              <ThemedText type="defaultSemiBold">
-                components/ParallaxScrollView.tsx
-              </ThemedText>{" "}
-              component provides a parallax effect for the header image.
-            </ThemedText>
-          ),
-        })}
-      </Collapsible>
-    </ParallaxScrollView>
+
+        {/* Appearance Section */}
+        <ThemedView className="mb-8 bg-transparent">
+          <ThemedText type="subtitle" className="mb-4">
+            Customization
+          </ThemedText>
+          
+          <TouchableOpacity 
+            onPress={openAppearanceSettings}
+            className="border border-neutral-200 dark:border-neutral-700 rounded-xl p-4 mb-4 flex-row items-center gap-4"
+            activeOpacity={0.7}
+          >
+            <Palette size={24} color={colorScheme === "light" ? "#525252" : "#a3a3a3"} />
+            <ThemedView className="flex-1 bg-transparent">
+              <ThemedText type="defaultSemiBold" className="mb-1">
+                Appearance
+              </ThemedText>
+              <ThemedText className="opacity-70 text-sm">
+                Customize accent colors and theme
+              </ThemedText>
+            </ThemedView>
+            <ChevronRight size={20} color="#a3a3a3" />
+          </TouchableOpacity>
+        </ThemedView>
+
+        {/* App Information Section */}
+        <ThemedView className="mb-8 bg-transparent">
+          <ThemedText type="subtitle" className="mb-4">
+            App Information
+          </ThemedText>
+          
+          <ThemedView className="border border-neutral-200 dark:border-neutral-700 rounded-xl p-4 mb-4 bg-transparent">
+            <ThemedText className="opacity-70 mb-1">Version</ThemedText>
+            <ThemedText type="defaultSemiBold">{APP_VERSION}</ThemedText>
+          </ThemedView>
+        </ThemedView>
+
+        {/* Links Section */}
+        <ThemedView className="mb-8 bg-transparent">
+          <ThemedText type="subtitle" className="mb-4">
+            Links & Legal
+          </ThemedText>
+          
+          {/* GitHub Repository */}
+          <TouchableOpacity 
+            onPress={openGithub}
+            className="border border-neutral-200 dark:border-neutral-700 rounded-xl p-4 mb-4 flex-row items-center gap-4"
+            activeOpacity={0.7}
+          >
+            <Github size={24} color={colorScheme === "light" ? "#525252" : "#a3a3a3"} />
+            <ThemedView className="flex-1 bg-transparent">
+              <ThemedText type="defaultSemiBold" className="mb-1">
+                GitHub Repository
+              </ThemedText>
+              <ThemedText className="opacity-70 text-sm">
+                View source code and contribute
+              </ThemedText>
+            </ThemedView>
+            <ChevronRight size={20} color="#a3a3a3" />
+          </TouchableOpacity>
+
+          {/* License */}
+          <TouchableOpacity 
+            onPress={openLicence}
+            className="border border-neutral-200 dark:border-neutral-700 rounded-xl p-4 flex-row items-center gap-4"
+            activeOpacity={0.7}
+          >
+            <Scale size={24} color={colorScheme === "light" ? "#525252" : "#a3a3a3"} />
+            <ThemedView className="flex-1 bg-transparent">
+              <ThemedText type="defaultSemiBold" className="mb-1">
+                License
+              </ThemedText>
+              <ThemedText className="opacity-70 text-sm">
+                View license information
+              </ThemedText>
+            </ThemedView>
+            <ChevronRight size={20} color="#a3a3a3" />
+          </TouchableOpacity>
+        </ThemedView>
+
+        {/* About Section */}
+        <ThemedView className="mb-8 bg-transparent">
+          <ThemedText type="subtitle" className="mb-4">
+            About
+          </ThemedText>
+          
+          <ThemedText className="opacity-70 leading-6">
+            N-Recipe is an offline recipe management app designed for Android. 
+            Store and organize your favorite recipes locally on your device with 
+            support for system accent colors and dark mode.
+          </ThemedText>
+        </ThemedView>
+
+        {/* Footer */}
+        <ThemedView className="items-center pt-8 pb-4 bg-transparent">
+          <ThemedText className="opacity-40 text-sm text-center">
+            Made with ❤️ for cooking enthusiasts
+          </ThemedText>
+        </ThemedView>
+      </ScrollView>
+    </ThemedView>
   );
 }
-
-const styles = StyleSheet.create({
-  headerImage: {
-    color: "#808080",
-    bottom: -60,
-    left: -20,
-    position: "absolute",
-  },
-  titleContainer: {
-    flexDirection: "row",
-    gap: 8,
-  },
-});
