@@ -64,6 +64,7 @@ export default function HomeScreen() {
         refreshControl={
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
         }
+        contentContainerStyle={{ paddingBottom: 76 }}
       >
         <ThemedText type="title" className="mb-2">
           Types
@@ -85,7 +86,7 @@ export default function HomeScreen() {
         <ThemedView className="flex flex-col gap-4 bg-transparent">
           {favoriteRecipes.length > 0 ? (
             favoriteRecipes.map((recipe) => (
-              <RecipeCard key={recipe.id} id={recipe.id} name={recipe.title} img={recipe.img} />
+              <RecipeCard key={recipe.id} recipe={recipe} />
             ))
           ) : (
             <ThemedText className="text-center opacity-50 py-8">

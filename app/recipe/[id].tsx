@@ -1,13 +1,14 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { useAccentColors } from "@/hooks/use-system-accent";
+import { getTotalCookingTime } from "@/lib/utils";
 import { StorageService } from "@/services/storage";
 import { RecipeType } from "@/types/recipe";
 import { Image } from "expo-image";
 import { router, useLocalSearchParams } from "expo-router";
 import { ArrowLeft, Clock, Heart, HeartOff, Pizza, Trash, User } from "lucide-react-native";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Alert, Pressable, ScrollView, TouchableOpacity, useColorScheme } from "react-native";
+import { ActivityIndicator, Alert, Pressable, ScrollView, TouchableOpacity, useColorScheme, View } from "react-native";
 
 export default function RecipeViewScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
@@ -120,10 +121,6 @@ export default function RecipeViewScreen() {
     );
   }
 
-  const getTotalCookingTime = () => {
-    return recipe.steps.reduce((total, step) => total + step.duration, 0);
-  };
-
   const getAllIngredients = () => {
     const ingredientMap = new Map<string, { name: string; unit?: string; quantity?: number }>();
     
@@ -234,24 +231,31 @@ export default function RecipeViewScreen() {
             className="flex-row items-center justify-center gap-4 mb-4"
             style={{ backgroundColor: accentColors.base }}
           >
-            <ThemedView 
-              className="flex-row items-center gap-1"
-              style={{ backgroundColor: accentColors.base }}
-            >
+            <View className="flex-row items-center gap-1">
               <Clock size={16} color={accentColors.subtext0} />
               <ThemedText 
                 className="text-sm"
                 style={{ color: accentColors.subtext0 }}
               >
-                {getTotalCookingTime()} min
+                {getTotalCookingTime(recipe)} min
               </ThemedText>
-            </ThemedView>
+            </View>
+
+            <View className="flex-row items-center gap-1">
+              <User size={16} color={accentColors.subtext0} />
+              <ThemedText 
+                className="text-sm"
+                style={{ color: accentColors.subtext0 }}
+              >
+                {recipe.servings}
+              </ThemedText>
+            </View>
             
             <ThemedView 
               className="px-3 py-1 rounded-full"
-              style={{ backgroundColor: categoryColors[recipe.category] }}
+              style={{ backgroundColor: accentColors.primary }}
             >
-              <ThemedText className="text-xs font-semibold capitalize">
+              <ThemedText type="button" className="text-xs font-semibold capitalize">
                 {recipe.category}
               </ThemedText>
             </ThemedView>
@@ -280,10 +284,10 @@ export default function RecipeViewScreen() {
           {getAllIngredients().map((ingredient, index) => (
             <ThemedView 
               key={index}
-              className="flex-row items-center justify-between py-2 border-b border-opacity-20"
+              className="flex-row items-center justify-between py-2 border-b"
               style={{ 
                 backgroundColor: accentColors.surface,
-                borderBottomColor: accentColors.subtext0
+                borderBottomColor: accentColors.base
               }}
             >
               <ThemedText style={{ color: accentColors.text }}>

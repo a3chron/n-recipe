@@ -34,7 +34,7 @@ export default function RecipesScreen() {
   };
 
   const renderRecipe = ({ item }: { item: RecipeType }) => (
-    <RecipeCard id={item.id} name={item.title} img={item.img} />
+    <RecipeCard recipe={item} />
   );
 
   return (

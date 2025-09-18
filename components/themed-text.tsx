@@ -3,15 +3,11 @@ import { cn } from "@/lib/utils";
 import { Text, type TextProps } from "react-native";
 
 export type ThemedTextProps = TextProps & {
-  lightColor?: string;
-  darkColor?: string;
   className?: string;
   type?: "default" | "title" | "bold" | "subtitle" | "link" | "button";
 };
 
 export function ThemedText({
-  lightColor,
-  darkColor,
   className,
   type = "default",
   ...otherProps

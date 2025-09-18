@@ -29,6 +29,12 @@ can be browsed and rated (although this would be a bigger change, as we would ne
 
 If you have any ideas for features, that you want to see, feel free to open an issue.
 
+What I have planned:
+
+- **Ingredients screen:** filter by ingredients you have at home
+- **Start cooking** add timer option for steps, select for how many persons
+- **All recipes screen filter** filter by types etc
+
 # Contributions
 
 Contributions are welcome, just create a fork, try to use [conventional commits](https://www.conventionalcommits.org/)
