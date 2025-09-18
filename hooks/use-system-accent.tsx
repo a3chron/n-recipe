@@ -295,8 +295,8 @@ export function useThemeSettings() {
   };
 }
 
-// Hook for getting accent color classes for NativeWind
-export function useAccentClasses() {
+// Hook for getting accent colors
+export function useAccentColors() {
   const colors = useSystemAccent();
   
   return {

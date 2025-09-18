@@ -1,12 +1,33 @@
 # n-recipe
 
-A offline recipe book (maybe will be in a Nothing style).
+A customizable offline recipe book with Catppuccin, Nothing and (beta-) System theme.  
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+
+**Features:**
+
+- Add recipes with steps and ingredients
+- View saved Recipes
+- Several themes
+
+Many features to come :)
+
+**Preview:**
+
+<img src="./assets/preview/add-recipe.jpeg" width="240" /> 
+<img src="./assets/preview/settings.jpeg" width="240" />
+<img src="./assets/preview/recipe-view.jpeg" width="240" />
+<img src="./assets/preview/recipe-instructions.jpeg" width="240" />
 
 # Future Plans
 
-If I suprisingly get the time to work on this enough, and it gains some traction, I might create a paid pro version of the app with some extra features,
+If I suprisingly get the time to work on this enough, and it gains some traction,
+I might create a paid pro version of the app with some extra features / improved animations or sth similar,
 but it's important for me that in this case the open-source variant stays useable and active.
+
+Another thing I might do, if I find the time, I might add online options, so syncing (-> usage on multiple devices) and public recipes that
+can be browsed and rated (although this would be a bigger change, as we would need accounts, a database and maybe a server for that).
+
+If you have any ideas for features, that you want to see, feel free to open an issue.
 
 # Contributions
 

@@ -1,29 +1,28 @@
-import { cn } from "@/lib/utils";
-import { useColorScheme, View, type ViewProps } from "react-native";
+import { useAccentColors } from "@/hooks/use-system-accent";
+import { View, type ViewProps } from "react-native";
 
 export type ThemedViewProps = ViewProps & {
-  lightColor?: string;
-  darkColor?: string;
   className?: string;
+  type?: "bg" | "modal" | "button"
 };
 
 export function ThemedView({
-  style,
-  lightColor,
-  darkColor,
   className,
+  type = "bg",
   ...otherProps
 }: ThemedViewProps) {
-  const colorScheme = useColorScheme();
-  
-  const baseClasses = colorScheme === 'dark' 
-    ? 'bg-neutral-900' 
-    : 'bg-white';
+  const accentColors = useAccentColors();
+
+  const typeBgColor = {
+    "bg": accentColors.base,
+    "modal": accentColors.mantle,
+    "button": accentColors.crust,
+  }
   
   return (
     <View 
-      style={style} 
-      className={cn(baseClasses, className)} 
+      style={{backgroundColor: typeBgColor[type]}} 
+      className={className} 
       {...otherProps} 
     />
   );

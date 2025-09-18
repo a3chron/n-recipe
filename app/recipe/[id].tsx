@@ -1,20 +1,65 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { useAccentClasses } from "@/hooks/use-system-accent";
+import { useAccentColors } from "@/hooks/use-system-accent";
 import { StorageService } from "@/services/storage";
 import { RecipeType } from "@/types/recipe";
 import { Image } from "expo-image";
 import { router, useLocalSearchParams } from "expo-router";
-import { ArrowLeft, Clock, Pizza, User } from "lucide-react-native";
+import { ArrowLeft, Clock, Heart, HeartOff, Pizza, Trash, User } from "lucide-react-native";
 import { useEffect, useState } from "react";
-import { ActivityIndicator, ScrollView, TouchableOpacity, useColorScheme } from "react-native";
+import { ActivityIndicator, Alert, Pressable, ScrollView, TouchableOpacity, useColorScheme } from "react-native";
 
 export default function RecipeViewScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const [recipe, setRecipe] = useState<RecipeType | null>(null);
+  const [isFavorite, setIsFavorite] = useState<boolean>(false);
   const [loading, setLoading] = useState(true);
-  const accentColors = useAccentClasses();
+  const accentColors = useAccentColors(); 
   const colorScheme = useColorScheme();
+
+  const handleDelete = async () => {
+    Alert.alert(
+      "Delete Recipe",
+      "Are you sure you want to delete this recipe? This action cannot be undone.",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "Delete",
+          style: "destructive",
+          onPress: async () => {
+            if (id) {
+              try {
+                await StorageService.deleteRecipe(id);
+                router.back();
+              } catch (error) {
+                Alert.alert("Error", "Failed to delete recipe. Please try again.");
+              }
+            }
+          }
+        }
+      ]
+    );
+  };
+
+  const handleToggleFavorite = async () => {
+    if (!id) return;
+    
+    try {
+      const toggeled = await StorageService.toggleFavorite(id);
+      if (toggeled) {
+        setIsFavorite(!isFavorite);
+        // Update the recipe state as well
+        if (recipe) {
+          setRecipe({ ...recipe, isFavorite: !isFavorite });
+        }
+      } //TODO: show error toast otherwise
+    } catch (error) {
+      Alert.alert("Error", "Failed to update favorite status. Please try again.");
+    }
+  };
 
   useEffect(() => {
     loadRecipe();
@@ -32,6 +77,7 @@ export default function RecipeViewScreen() {
       
       if (foundRecipe) {
         setRecipe(foundRecipe);
+        setIsFavorite(foundRecipe.isFavorite || false);
       } else {
         // Recipe not found, go back
         router.back();
@@ -75,13 +121,13 @@ export default function RecipeViewScreen() {
   }
 
   const getTotalCookingTime = () => {
-    return recipe.recipe.reduce((total, step) => total + step.duration, 0);
+    return recipe.steps.reduce((total, step) => total + step.duration, 0);
   };
 
   const getAllIngredients = () => {
     const ingredientMap = new Map<string, { name: string; unit?: string; quantity?: number }>();
     
-    recipe.recipe.forEach(step => {
+    recipe.steps.forEach(step => {
       step.ingredients.forEach(ingredient => {
         const key = `${ingredient.name}-${ingredient.unit || 'no-unit'}`;
         if (ingredientMap.has(key)) {
@@ -120,11 +166,33 @@ export default function RecipeViewScreen() {
         style={{ backgroundColor: accentColors.base }}
       >
         <TouchableOpacity onPress={() => router.back()} className="mr-4">
-          <ArrowLeft size={24} color={accentColors.text} />
+          <ArrowLeft size={24} color={accentColors.subtext0} />
         </TouchableOpacity>
-        <ThemedText type="title" style={{ color: accentColors.text }}>
+        <ThemedText type="title" style={{ color: accentColors.text }} className="flex-1">
           Recipe
         </ThemedText>
+        <ThemedView className="flex flex-row gap-3 items-center justify-end">
+          <Pressable onPress={handleToggleFavorite}>
+            <ThemedView 
+              className="rounded-xl p-3"
+              style={{ backgroundColor: accentColors.surface }}
+            >
+              {isFavorite ? (
+                <Heart size={24} color={accentColors.primary} fill={accentColors.primary} />
+              ) : (
+                <HeartOff size={24} color={accentColors.subtext0} />
+              )}
+            </ThemedView>
+          </Pressable>
+          <Pressable onPress={handleDelete}>
+            <ThemedView 
+              className="rounded-xl p-3"
+              style={{ backgroundColor: accentColors.surface }}
+            >
+              <Trash size={24} color={accentColors.subtext0} />
+            </ThemedView>
+          </Pressable>
+        </ThemedView>
       </ThemedView>
 
       <ScrollView className="flex-1" showsVerticalScrollIndicator={false}>
@@ -183,14 +251,14 @@ export default function RecipeViewScreen() {
               className="px-3 py-1 rounded-full"
               style={{ backgroundColor: categoryColors[recipe.category] }}
             >
-              <ThemedText className="text-xs font-semibold text-white capitalize">
+              <ThemedText className="text-xs font-semibold capitalize">
                 {recipe.category}
               </ThemedText>
             </ThemedView>
           </ThemedView>
 
           <ThemedText 
-            className="text-center text-xs opacity-60"
+            className="text-center text-xs"
             style={{ color: accentColors.subtext1 }}
           >
             Created {formatDate(recipe.createdAt)}
@@ -243,7 +311,7 @@ export default function RecipeViewScreen() {
             Instructions
           </ThemedText>
 
-          {recipe.recipe.map((step, index) => (
+          {recipe.steps.map((step, index) => (
             <ThemedView 
               key={index}
               className="mb-4 rounded-2xl p-4"
@@ -261,7 +329,7 @@ export default function RecipeViewScreen() {
                     className="w-8 h-8 rounded-full items-center justify-center"
                     style={{ backgroundColor: accentColors.primary }}
                   >
-                    <ThemedText className="text-white font-bold">
+                    <ThemedText type="button" className="font-bold">
                       {step.order}
                     </ThemedText>
                   </ThemedView>
@@ -335,8 +403,8 @@ export default function RecipeViewScreen() {
             className="flex-row items-center gap-2"
             style={{ backgroundColor: 'transparent' }}
           >
-            <User size={20} color="white" />
-            <ThemedText className="text-white font-semibold text-lg">
+            <User size={20} color={accentColors.crust} />
+            <ThemedText type="button" className="font-semibold text-lg">
               Start Cooking
             </ThemedText>
           </ThemedView>

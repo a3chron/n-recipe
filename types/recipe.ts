@@ -1,9 +1,14 @@
 export type RecipeType = {
   id: string;
   title: string;
+  description?: string; //TODO: handle adding this
+  servings: number;
   img?: string;
+  isFavorite?: boolean;
   category: RecipeCategoryType;
-  recipe: RecipeStepType[];
+  tags?: string[]; //TODO: handle adding this
+  difficulty?: "easy" | "medium" | "hard"; //TODO: handle adding this
+  steps: RecipeStepType[];
   createdAt: Date;
   updatedAt: Date;
 }
@@ -12,7 +17,7 @@ export type RecipeStepType = {
   name: string;
   order: number;
   description: string;
-  duration: number; // minutes
+  duration: number; // in minutes
   ingredients: IngredientType[];
 }
 

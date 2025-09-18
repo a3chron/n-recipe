@@ -1,7 +1,9 @@
+import { useAccentColors } from "@/hooks/use-system-accent";
 import { Image } from "expo-image";
 import { router } from "expo-router";
 import { Pizza } from "lucide-react-native";
-import { Text, TouchableOpacity, useColorScheme } from "react-native";
+import { TouchableOpacity } from "react-native";
+import { ThemedText } from "../themed-text";
 
 export default function RecipeCard({ 
   name, 
@@ -12,20 +14,17 @@ export default function RecipeCard({
   id: string;
   img?: string; 
 }) {
-  const colorScheme = useColorScheme();
-  
+  const accentColors = useAccentColors();
+
   return (
     <TouchableOpacity 
       onPress={() => router.push(`/recipe/${id}`)}
-      className={`flex items-center justify-center gap-4 p-6 rounded-2xl w-full ${
-        colorScheme === 'dark' 
-          ? 'bg-neutral-800 border border-neutral-700' 
-          : 'bg-neutral-100 border border-neutral-200'
-      }`}
+      className="flex items-center justify-center gap-4 p-6 rounded-2xl w-full border"
+      style={{backgroundColor: accentColors.mantle, borderColor: accentColors.crust}}
       activeOpacity={0.8}
     >
       {img === undefined ? (
-        <Pizza size={44} color="#C8102E" />
+        <Pizza size={44} color={accentColors.primary} />
       ) : (
         <Image 
           source={img} 
@@ -33,11 +32,9 @@ export default function RecipeCard({
           contentFit="cover"
         />
       )}
-      <Text className={`font-medium text-center ${
-        colorScheme === 'dark' ? 'text-neutral-100' : 'text-neutral-900'
-      }`}>
+      <ThemedText className="font-medium text-center">
         {name}
-      </Text>
+      </ThemedText>
     </TouchableOpacity>
   );
 }

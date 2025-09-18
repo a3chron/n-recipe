@@ -1,39 +1,45 @@
+import { useAccentColors } from "@/hooks/use-system-accent";
 import { cn } from "@/lib/utils";
-import { Text, useColorScheme, type TextProps } from "react-native";
+import { Text, type TextProps } from "react-native";
 
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
   className?: string;
-  type?: "default" | "title" | "defaultSemiBold" | "subtitle" | "link";
+  type?: "default" | "title" | "bold" | "subtitle" | "link" | "button";
 };
 
 export function ThemedText({
-  style,
   lightColor,
   darkColor,
   className,
   type = "default",
   ...otherProps
 }: ThemedTextProps) {
-  const colorScheme = useColorScheme();
-  
-  const baseClasses = colorScheme === 'dark' 
-    ? 'text-neutral-100' 
-    : 'text-neutral-900';
+  const accentColors = useAccentColors();
     
   const typeClasses = {
     default: '',
     title: 'text-3xl font-bold',
-    defaultSemiBold: 'font-semibold',
+    bold: 'font-semibold',
     subtitle: 'text-xl font-medium',
-    link: 'text-blue-500 underline'
+    link: 'underline',
+    button: '',
+  };
+
+  const typeTextColors = {
+    default: accentColors.subtext1,
+    title: accentColors.text,
+    bold: accentColors.subtext1,
+    subtitle: accentColors.text,
+    link: accentColors.primary,
+    button: accentColors.crust,
   };
   
   return (
     <Text 
-      style={style}
-      className={cn(baseClasses, typeClasses[type], className)}
+      style={{color: typeTextColors[type]}}
+      className={cn(typeClasses[type], className)}
       {...otherProps} 
     />
   );

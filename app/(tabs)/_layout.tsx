@@ -1,22 +1,21 @@
 import { Tabs } from "expo-router";
 import React from "react";
-import { StyleSheet, useColorScheme } from "react-native";
 
-import { useAccentClasses } from "@/hooks/use-system-accent";
+import { useAccentColors } from "@/hooks/use-system-accent";
 import { BookHeart, House, Settings } from "lucide-react-native";
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-  const accentColors = useAccentClasses();
+  const accentColors = useAccentColors();
 
   return (
     <Tabs
       initialRouteName="index"
       screenOptions={{
         tabBarActiveTintColor: accentColors.primary,
+        tabBarInactiveTintColor: accentColors.subtext0,
         headerShown: false,
         animation: "shift",
-        tabBarStyle: {...styles.tabBar, backgroundColor: colorScheme === "light" ? "white" : "black"},
+        tabBarStyle: {backgroundColor: accentColors.crust, paddingTop: 12},
         tabBarShowLabel: false,
       }}
     >
@@ -41,14 +40,3 @@ export default function TabLayout() {
     </Tabs>
   );
 }
-
-const styles = StyleSheet.create({
-  badge: {
-    color: "black",
-    backgroundColor: "red",
-  },
-  tabBar: {
-    paddingTop: 16,
-    height: 84,
-  },
-});

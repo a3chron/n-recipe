@@ -74,4 +74,28 @@ export class StorageService {
       return false;
     }
   }
+
+  // Favs management
+  static async toggleFavorite(id: string): Promise<boolean> {
+    try {
+      const recipes = await this.getAllRecipes();
+      const recipeIndex = recipes.findIndex(r => r.id === id);
+      
+      if (recipeIndex === -1) return false;
+
+      recipes[recipeIndex].isFavorite = !recipes[recipeIndex].isFavorite;
+      recipes[recipeIndex].updatedAt = new Date();
+      await AsyncStorage.setItem(RECIPES_KEY, JSON.stringify(recipes));
+
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
+  static async getFavoriteRecipes(): Promise<RecipeType[]> {
+    const recipes = await this.getAllRecipes();
+    return recipes.filter(recipe => recipe.isFavorite === true);
+  }
 }

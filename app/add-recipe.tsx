@@ -1,7 +1,7 @@
 // app/add-recipe.tsx
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
-import { useAccentClasses } from "@/hooks/use-system-accent";
+import { useAccentColors } from "@/hooks/use-system-accent";
 import { StorageService } from "@/services/storage";
 import { IngredientType, RecipeCategoryType, RecipeStepType } from "@/types/recipe";
 import { router } from "expo-router";
@@ -12,22 +12,22 @@ import {
   KeyboardAvoidingView,
   ScrollView,
   TextInput,
-  TouchableOpacity,
-  useColorScheme
+  TouchableOpacity
 } from "react-native";
 
 const categories: RecipeCategoryType[] = ["breakfast", "lunch", "dinner", "snack", "dessert"];
 
 export default function AddRecipeScreen() {
   const [title, setTitle] = useState("");
+  const [servings, setServings] = useState(0);
   const [selectedCategory, setSelectedCategory] = useState<RecipeCategoryType>("dinner");
+  const [saving, setSaving] = useState(false);
   const [steps, setSteps] = useState<RecipeStepType[]>([
     { name: "", order: 1, description: "", ingredients: [], duration: 0 }
   ]);
-  const [saving, setSaving] = useState(false);
-  
-  const accentClasses = useAccentClasses();
-  const colorScheme = useColorScheme();
+  const accentColors = useAccentColors();
+
+  const canSave = !saving && title !== "" && steps.length !== 0 && steps[0].name !== "";
 
   const addStep = () => {
     setSteps([...steps, { 
@@ -92,8 +92,9 @@ export default function AddRecipeScreen() {
     try {
       await StorageService.saveRecipe({
         title: title.trim(),
+        servings,
         category: selectedCategory,
-        recipe: steps
+        steps
       });
       
       Alert.alert("Success", "Recipe saved successfully!", [
@@ -106,11 +107,13 @@ export default function AddRecipeScreen() {
     }
   };
 
-  const inputClass = colorScheme === 'dark' 
-    ? 'bg-neutral-800 text-white border-neutral-600' 
-    : 'bg-white text-black border-neutral-300';
+  const inputStyle = {
+    backgroundColor: accentColors.mantle,
+    color: accentColors.text,
+    borderColor: accentColors.surface,
+  }
   
-  const categoryBorderColor = colorScheme === "light" ? "#525252" : "#d4d4d4"
+  const borderColor = accentColors.surface;
 
   return (
     <KeyboardAvoidingView 
@@ -121,7 +124,7 @@ export default function AddRecipeScreen() {
         {/* Header */}
         <ThemedView className="flex-row items-center px-6 pt-16 pb-4 bg-transparent">
           <TouchableOpacity onPress={() => router.back()} className="mr-4">
-            <ArrowLeft size={24} color={colorScheme === "light" ? "#525252" : "#a3a3a3"} />
+            <ArrowLeft size={24} color={accentColors.subtext0} />
           </TouchableOpacity>
           <ThemedText type="title">Add Recipe</ThemedText>
         </ThemedView>
@@ -134,8 +137,21 @@ export default function AddRecipeScreen() {
               value={title}
               onChangeText={setTitle}
               placeholder="Enter recipe title"
-              className={`border rounded-xl p-4 ${inputClass}`}
-              placeholderTextColor={colorScheme === 'dark' ? '#9CA3AF' : '#6B7280'}
+              className="border rounded-xl p-4"
+              style={inputStyle}
+              placeholderTextColor={accentColors.subtext0}
+            />
+          </ThemedView>
+
+          <ThemedView className="mb-6 bg-transparent">
+            <ThemedText className="mb-2 font-semibold">Servings *</ThemedText>
+            <TextInput
+              value={servings.toString()}
+              onChangeText={(value) => (value === "" || parseFloat(value) >= 0) && setServings(parseFloat(value) || 0)}
+              placeholder="For how many people is this intended"
+              className="border rounded-xl p-4"
+              style={inputStyle}
+              placeholderTextColor={accentColors.subtext0}
             />
           </ThemedView>
 
@@ -149,11 +165,9 @@ export default function AddRecipeScreen() {
                     key={category}
                     onPress={() => setSelectedCategory(category)}
                     className="px-4 py-2 rounded-full border"
-                    style={{borderColor: selectedCategory === category ? accentClasses.primary : categoryBorderColor}}
+                    style={{borderColor: selectedCategory === category ? accentColors.primary : accentColors.mantle, backgroundColor: borderColor}}
                   >
-                    <ThemedText 
-                      className={selectedCategory === category ? 'text-white' : ''}
-                    >
+                    <ThemedText>
                       {category}
                     </ThemedText>
                   </TouchableOpacity>
@@ -169,14 +183,14 @@ export default function AddRecipeScreen() {
               <TouchableOpacity 
                 onPress={addStep}
                 className="w-8 h-8 rounded-full items-center justify-center"
-                style={{backgroundColor: accentClasses.primary}}
+                style={{backgroundColor: accentColors.primary}}
               >
-                <Plus size={16} color="white" />
+                <Plus size={16} color={accentColors.crust} />
               </TouchableOpacity>
             </ThemedView>
 
             {steps.map((step, stepIndex) => (
-              <ThemedView key={stepIndex} className="mb-6 border border-neutral-200 dark:border-neutral-700 rounded-xl p-4 bg-transparent">
+              <ThemedView key={stepIndex} className="mb-6 border rounded-xl p-4 bg-transparent" style={{borderColor: borderColor}}>
                 <ThemedView className="flex-row items-center justify-between mb-3 bg-transparent">
                   <ThemedText className="font-semibold">Step {step.order}</ThemedText>
                   {steps.length > 1 && (
@@ -190,8 +204,9 @@ export default function AddRecipeScreen() {
                   value={step.name}
                   onChangeText={(value) => updateStep(stepIndex, 'name', value)}
                   placeholder="Step name (e.g., 'Prepare ingredients')"
-                  className={`border rounded-lg p-3 mb-3 ${inputClass}`}
-                  placeholderTextColor={colorScheme === 'dark' ? '#9CA3AF' : '#6B7280'}
+                  className="border rounded-lg p-3 mb-3"
+                  style={inputStyle}
+                  placeholderTextColor={accentColors.subtext0}
                 />
 
                 <TextInput
@@ -200,8 +215,19 @@ export default function AddRecipeScreen() {
                   placeholder="Step description"
                   multiline
                   numberOfLines={3}
-                  className={`border rounded-lg p-3 mb-4 ${inputClass}`}
-                  placeholderTextColor={colorScheme === 'dark' ? '#9CA3AF' : '#6B7280'}
+                  className="border rounded-lg p-3 mb-4"
+                  style={inputStyle}
+                  placeholderTextColor={accentColors.subtext0}
+                />
+
+                <TextInput
+                  value={step.duration.toString()}
+                  onChangeText={(value) => (value === "" || parseFloat(value) >= 0) && updateStep(stepIndex, 'duration', parseFloat(value) || 0)}
+                  placeholder="Step duration in minutes"
+                  keyboardType="numeric"
+                  className="border rounded-lg p-3 mb-4"
+                  style={inputStyle}
+                  placeholderTextColor={accentColors.subtext0}
                 />
 
                 {/* Ingredients for this step */}
@@ -211,9 +237,9 @@ export default function AddRecipeScreen() {
                     <TouchableOpacity 
                       onPress={() => addIngredient(stepIndex)}
                       className="w-6 h-6 rounded-full items-center justify-center"
-                      style={{backgroundColor: accentClasses.primary}}
+                      style={{backgroundColor: accentColors.primary}}
                     >
-                      <Plus size={12} color="white" />
+                      <Plus size={12} color={accentColors.crust} />
                     </TouchableOpacity>
                   </ThemedView>
 
@@ -223,23 +249,26 @@ export default function AddRecipeScreen() {
                         value={ingredient.name}
                         onChangeText={(value) => updateIngredient(stepIndex, ingredientIndex, 'name', value)}
                         placeholder="Ingredient"
-                        className={`flex-1 border rounded-lg p-2 ${inputClass}`}
-                        placeholderTextColor={colorScheme === 'dark' ? '#9CA3AF' : '#6B7280'}
+                        className="flex-1 border rounded-lg p-2"
+                        style={inputStyle}
+                        placeholderTextColor={accentColors.subtext0}
                       />
                       <TextInput
                         value={(ingredient.quantity ?? 0).toString()}
-                        onChangeText={(value) => updateIngredient(stepIndex, ingredientIndex, 'quantity', parseFloat(value) || 0)}
+                        onChangeText={(value) => (value === "" || parseFloat(value) >= 0) && updateIngredient(stepIndex, ingredientIndex, 'quantity', parseFloat(value) || 0)}
                         placeholder="Amount"
                         keyboardType="numeric"
-                        className={`w-20 border rounded-lg p-2 ${inputClass}`}
-                        placeholderTextColor={colorScheme === 'dark' ? '#9CA3AF' : '#6B7280'}
+                        className="w-20 border rounded-lg p-2"
+                        style={inputStyle}
+                        placeholderTextColor={accentColors.subtext0}
                       />
                       <TextInput
                         value={ingredient.unit}
                         onChangeText={(value) => updateIngredient(stepIndex, ingredientIndex, 'unit', value)}
                         placeholder="Unit"
-                        className={`w-16 border rounded-lg p-2 ${inputClass}`}
-                        placeholderTextColor={colorScheme === 'dark' ? '#9CA3AF' : '#6B7280'}
+                        className="w-16 border rounded-lg p-2"
+                        style={inputStyle}
+                        placeholderTextColor={accentColors.subtext0}
                       />
                       {step.ingredients.length > 0 && (
                         <TouchableOpacity onPress={() => removeIngredient(stepIndex, ingredientIndex)}>
@@ -261,14 +290,18 @@ export default function AddRecipeScreen() {
         </ScrollView>
 
         {/* Save Button */}
-        <ThemedView className="p-6 border-t border-neutral-200 dark:border-neutral-700 bg-transparent">
+        <ThemedView className="p-6 border-t bg-transparent" style={{borderColor: accentColors.surface}}>
           <TouchableOpacity
             onPress={saveRecipe}
-            disabled={saving}
-            className="pb-6 rounded-xl items-center disabled:opacity-50"
-            style={{backgroundColor: accentClasses.tertiary}}
+            disabled={!canSave}
+            className="py-4 rounded-xl items-center justify-center disabled:opacity-60"
+            style={{
+              backgroundColor: canSave
+                ? accentColors.primary
+                : accentColors.subtext1,
+            }}
           >
-            <ThemedText className="text-white font-semibold text-lg">
+            <ThemedText className="font-semibold text-lg" style={{color: accentColors.crust}}>
               {saving ? 'Saving...' : 'Save Recipe'}
             </ThemedText>
           </TouchableOpacity>

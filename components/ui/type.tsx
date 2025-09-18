@@ -1,5 +1,4 @@
-// components/ui/type.tsx
-import { useAccentClasses } from "@/hooks/use-system-accent";
+import { useAccentColors } from "@/hooks/use-system-accent";
 import { Text, TouchableOpacity } from "react-native";
 
 export default function RecipeType({
@@ -11,7 +10,7 @@ export default function RecipeType({
   icon: React.ReactNode;
   onPress?: () => void;
 }) {
-  const accentClasses = useAccentClasses();
+  const accentClasses = useAccentColors();
   
   return (
     <TouchableOpacity 
