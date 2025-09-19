@@ -1,0 +1,105 @@
+name: Build and Deploy to Google Play
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Generate release notes from commits
+        id: release_notes
+        run: |
+          # Get the previous tag
+          PREVIOUS_TAG=$(git tag --sort=-version:refname | grep -v "^${{ github.ref_name }}$" | head -1)
+
+          if [ -z "$PREVIOUS_TAG" ]; then
+            echo "No previous tag found, using all commits"
+            COMMITS=$(git log --pretty=format:"• %s" --no-merges)
+          else
+            echo "Previous tag: $PREVIOUS_TAG"
+            COMMITS=$(git log ${PREVIOUS_TAG}..${{ github.ref_name }} --pretty=format:"• %s" --no-merges)
+          fi
+
+          # Create whatsnew directory and file
+          mkdir -p whatsnew
+
+          if [ -z "$COMMITS" ]; then
+            echo "• Bug fixes and improvements" > whatsnew/whatsnew-en-US
+          else
+            echo "$COMMITS" > whatsnew/whatsnew-en-US
+          fi
+
+          # Limit to 500 characters for Play Store
+          head -c 500 whatsnew/whatsnew-en-US > whatsnew/whatsnew-en-US.tmp
+          mv whatsnew/whatsnew-en-US.tmp whatsnew/whatsnew-en-US
+
+          echo "Generated release notes:"
+          cat whatsnew/whatsnew-en-US
+
+      - name: Generate native code
+        run: npx expo prebuild --platform android --no-install
+
+      - name: Create keystore file
+        run: |
+          echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 -d > android/app/my-upload-key.keystore
+
+      - name: Create gradle.properties with secrets
+        run: |
+          echo "MYAPP_UPLOAD_STORE_FILE=my-upload-key.keystore" >> android/gradle.properties
+          echo "MYAPP_UPLOAD_KEY_ALIAS=${{ secrets.KEY_ALIAS }}" >> android/gradle.properties  
+          echo "MYAPP_UPLOAD_STORE_PASSWORD=${{ secrets.KEYSTORE_PASSWORD }}" >> android/gradle.properties
+          echo "MYAPP_UPLOAD_KEY_PASSWORD=${{ secrets.KEY_PASSWORD }}" >> android/gradle.properties
+
+      - name: Build AAB
+        run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew app:bundleRelease
+
+      - name: Upload to Google Play
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.a3chron.nrecipe
+          releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
+          track: production
+          status: draft # Change to 'completed' for automatic release
+          whatsNewDirectory: whatsnew/
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body_path: whatsnew/whatsnew-en-US
+          files: android/app/build/outputs/bundle/release/app-release.aab

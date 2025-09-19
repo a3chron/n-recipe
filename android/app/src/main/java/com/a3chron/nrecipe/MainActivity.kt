@@ -1,4 +1,4 @@
-package com.anonymous.nrecipe
+package com.a3chron.nrecipe
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

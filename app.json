@@ -41,10 +41,7 @@
       "reactCompiler": true
     },
     "extra": {
-      "router": {},
-      "eas": {
-        "projectId": "c6051d2d-727a-4dda-9287-9263150f62d4"
-      }
+      "router": {}
     },
     "owner": "a3chron"
   }
