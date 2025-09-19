@@ -39,7 +39,8 @@ If you have any ideas for features, that you want to see, feel free to open an i
 What I have planned so far:
 
 - **Ingredients screen:** filter by ingredients you have at home
-- **Start cooking** add timer option for steps, select for how many persons
+- **Edit recipes**
+- **Export Recipes as text**
 
 # Contributions
 
