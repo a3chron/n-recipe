@@ -1,16 +1,17 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { useAccentColors } from "@/hooks/use-system-accent";
+import { getFullVersionInfo } from "@/lib/version";
 import { router } from "expo-router";
 import { ChevronRight, Github, Palette, Scale } from "lucide-react-native";
 import { useTranslation } from "react-i18next";
 import { Linking, ScrollView, TouchableOpacity } from "react-native";
 
-const APP_VERSION = "1.0.0";
 const GITHUB_URL = "https://github.com/a3chron/n-recipe";
 
 export default function SettingsScreen() {
   const accentColors = useAccentColors();
+  const versionInfo = getFullVersionInfo();
   const { t } = useTranslation();
 
   const openGithub = () => {
@@ -111,7 +112,7 @@ export default function SettingsScreen() {
               Version
             </ThemedText>
             <ThemedText type="bold" style={{ color: accentColors.text }}>
-              {APP_VERSION}
+              {versionInfo.formatted}
             </ThemedText>
           </ThemedView>
         </ThemedView>

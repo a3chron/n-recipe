@@ -69,7 +69,10 @@ jobs:
           cat whatsnew/whatsnew-en-US
 
       - name: Generate native code
-        run: npx expo prebuild --platform android --no-install
+        run: |
+          # Ensure we're on the tagged commit for version detection
+          git fetch --tags
+          npx expo prebuild --platform android --no-install
 
       - name: Create keystore file
         run: |
