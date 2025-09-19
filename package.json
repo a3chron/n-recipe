@@ -4,6 +4,9 @@
   "private": true,
   "scripts": {
     "android": "expo run:android",
+    "android:build": "cd android && ./gradlew app:bundleRelease",
+    "android:clean": "cd android && ./gradlew clean",
+    "prebuild": "npx expo prebuild --platform android",
     "lint": "eslint .",
     "format": "pnpm prettier --write .",
     "start": "react-native start",

@@ -15,16 +15,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 8
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: "pnpm"
-
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 8
 
       - name: Install dependencies
         run: pnpm install
@@ -98,7 +98,7 @@ jobs:
           packageName: com.a3chron.nrecipe
           releaseFiles: android/app/build/outputs/bundle/release/app-release.aab
           track: production
-          status: draft # Change to 'completed' for automatic release
+          status: completed
           whatsNewDirectory: whatsnew/
 
       - name: Create GitHub Release
