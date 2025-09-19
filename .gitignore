@@ -39,7 +39,3 @@ yarn-error.*
 # IDE
 .idea/
 .vscode/
-
-# generated native folders
-/ios
-/android
