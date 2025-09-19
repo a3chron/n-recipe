@@ -1,6 +1,6 @@
 # n-recipe
 
-A customizable offline recipe book with Catppuccin, Nothing and (beta-) System theme.  
+A simple, customizable and offline recipe book with Catppuccin, Nothing and (beta-) System theme.  
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
 **Features:**
@@ -36,13 +36,15 @@ can be browsed and rated (although this would be a bigger change, as we would ne
 
 If you have any ideas for features, that you want to see, feel free to open an issue.
 
-What I have planned:
+What I have planned so far:
 
 - **Ingredients screen:** filter by ingredients you have at home
 - **Start cooking** add timer option for steps, select for how many persons
-- **All recipes screen filter** filter by types etc
 
 # Contributions
+
+You can help a lot by translating to your language on [crowdin](https://crowdin.com/project/n-recipe).
+If your language does not exist yet, just create a new one (i think it works like that).
 
 Contributions are welcome, just create a fork, try to use [conventional commits](https://www.conventionalcommits.org/)
 (for the branch naming too, e.g. "feat/add-some-feature"), and create a PR in the end.

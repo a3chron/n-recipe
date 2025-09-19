@@ -51,6 +51,24 @@ export default function RootLayout() {
               }}
             />
             <Stack.Screen
+              name="cooking/[id]"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="cooking/ingredients/[id]"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="cooking/step/[id]"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
               name="modal"
               options={{ presentation: "modal", title: "Modal" }}
             />

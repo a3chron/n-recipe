@@ -446,6 +446,15 @@ export default function RecipeViewScreen() {
         <TouchableOpacity
           className="rounded-2xl py-4 items-center shadow-lg"
           style={{ backgroundColor: accentColors.primary }}
+          onPress={() =>
+            router.push({
+              pathname: "/cooking/[id]",
+              params: {
+                id: recipe.id,
+                recipe: JSON.stringify(recipe),
+              },
+            })
+          }
           activeOpacity={0.8}
         >
           <ThemedView
