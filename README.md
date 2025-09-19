@@ -7,16 +7,23 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 - Add recipes with steps and ingredients
 - View saved Recipes
+- Automatically calculate how much of your ingredients you need for more or less persons
 - Several themes
 
 Many features to come :)
 
 **Preview:**
 
-<img src="./assets/preview/add-recipe.jpeg" width="240" /> 
-<img src="./assets/preview/settings.jpeg" width="240" />
-<img src="./assets/preview/recipe-view.jpeg" width="240" />
-<img src="./assets/preview/recipe-instructions.jpeg" width="240" />
+<table>
+  <tr>
+    <td><img src="./assets/preview/add-recipe.jpeg" width="240" /></td>
+    <td><img src="./assets/preview/settings.jpeg" width="240" /></td>
+  </tr>
+  <tr>
+    <td><img src="./assets/preview/recipe-view.jpeg" width="240" /></td>
+    <td><img src="./assets/preview/recipe-instructions.jpeg" width="240" /></td>
+  </tr>
+</table>
 
 # Future Plans
 

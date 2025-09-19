@@ -15,7 +15,7 @@ export default function TabLayout() {
         tabBarInactiveTintColor: accentColors.subtext0,
         headerShown: false,
         animation: "shift",
-        tabBarStyle: {backgroundColor: accentColors.crust, paddingTop: 12},
+        tabBarStyle: { backgroundColor: accentColors.crust, paddingTop: 12 },
         tabBarShowLabel: false,
       }}
     >

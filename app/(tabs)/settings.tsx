@@ -3,6 +3,7 @@ import { ThemedView } from "@/components/themed-view";
 import { useAccentColors } from "@/hooks/use-system-accent";
 import { router } from "expo-router";
 import { ChevronRight, Github, Palette, Scale } from "lucide-react-native";
+import { useTranslation } from "react-i18next";
 import { Linking, ScrollView, TouchableOpacity } from "react-native";
 
 const APP_VERSION = "1.0.0";
@@ -10,6 +11,7 @@ const GITHUB_URL = "https://github.com/a3chron/n-recipe";
 
 export default function SettingsScreen() {
   const accentColors = useAccentColors();
+  const { t } = useTranslation();
 
   const openGithub = () => {
     Linking.openURL(GITHUB_URL);
@@ -20,61 +22,61 @@ export default function SettingsScreen() {
   };
 
   const openAppearanceSettings = () => {
-    router.push('/appearance-settings');
+    router.push("/appearance-settings");
   };
 
   return (
-    <ThemedView className="flex-1" style={{ backgroundColor: accentColors.base }}>
-      <ScrollView 
-        className="flex-1" 
+    <ThemedView
+      className="flex-1"
+      style={{ backgroundColor: accentColors.base }}
+    >
+      <ScrollView
+        className="flex-1"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: 32 }}
       >
         {/* Header */}
-        <ThemedView 
+        <ThemedView
           className="px-6 pt-16 pb-8"
           style={{ backgroundColor: accentColors.base }}
         >
-          <ThemedText 
-            type="title"
-            style={{ color: accentColors.text }}
-          >
-            Settings
+          <ThemedText type="title" style={{ color: accentColors.text }}>
+            {t("settings")}
           </ThemedText>
         </ThemedView>
 
         {/* Customization Section */}
-        <ThemedView 
+        <ThemedView
           className="mx-6 mb-8"
           style={{ backgroundColor: accentColors.base }}
         >
-          <ThemedText 
-            type="subtitle" 
+          <ThemedText
+            type="subtitle"
             className="mb-4"
             style={{ color: accentColors.text }}
           >
             Customization
           </ThemedText>
-          
-          <TouchableOpacity 
+
+          <TouchableOpacity
             onPress={openAppearanceSettings}
             className="rounded-xl p-4 flex-row items-center gap-4"
             style={{ backgroundColor: accentColors.surface }}
             activeOpacity={0.7}
           >
             <Palette size={24} color={accentColors.primary} />
-            <ThemedView 
+            <ThemedView
               className="flex-1"
               style={{ backgroundColor: accentColors.surface }}
             >
-              <ThemedText 
-                type="bold" 
+              <ThemedText
+                type="bold"
                 className="mb-1"
                 style={{ color: accentColors.text }}
               >
                 Appearance
               </ThemedText>
-              <ThemedText 
+              <ThemedText
                 className="text-sm"
                 style={{ color: accentColors.subtext0 }}
               >
@@ -86,70 +88,67 @@ export default function SettingsScreen() {
         </ThemedView>
 
         {/* App Information Section */}
-        <ThemedView 
+        <ThemedView
           className="mx-6 mb-8"
           style={{ backgroundColor: accentColors.base }}
         >
-          <ThemedText 
-            type="subtitle" 
+          <ThemedText
+            type="subtitle"
             className="mb-4"
             style={{ color: accentColors.text }}
           >
             App Information
           </ThemedText>
-          
-          <ThemedView 
+
+          <ThemedView
             className="rounded-xl p-4"
             style={{ backgroundColor: accentColors.surface }}
           >
-            <ThemedText 
+            <ThemedText
               className="mb-1"
               style={{ color: accentColors.subtext0 }}
             >
               Version
             </ThemedText>
-            <ThemedText 
-              type="bold"
-              style={{ color: accentColors.text }}
-            >
+            <ThemedText type="bold" style={{ color: accentColors.text }}>
               {APP_VERSION}
             </ThemedText>
           </ThemedView>
         </ThemedView>
 
         {/* Links & Legal Section */}
-        <ThemedView 
+        <ThemedView
           className="mx-6 mb-8"
           style={{ backgroundColor: accentColors.base }}
         >
-          <ThemedText 
-            type="subtitle" 
+          <ThemedText
+            type="subtitle"
             className="mb-4"
             style={{ color: accentColors.text }}
           >
             Links & Legal
           </ThemedText>
-          
+
           {/* GitHub Repository */}
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={openGithub}
             className="rounded-xl p-4 mb-4 flex-row items-center gap-4"
             style={{ backgroundColor: accentColors.surface }}
             activeOpacity={0.7}
           >
             <Github size={24} color={accentColors.subtext1} />
-            <ThemedView 
+            <ThemedView
               className="flex-1"
               style={{ backgroundColor: accentColors.surface }}
             >
-              <ThemedText 
-                type="bold" 
+              <ThemedText
+                type="bold"
                 className="mb-1"
                 style={{ color: accentColors.text }}
               >
                 GitHub Repository
               </ThemedText>
-              <ThemedText 
+              <ThemedText
                 className="text-sm"
                 style={{ color: accentColors.subtext0 }}
               >
@@ -160,25 +159,25 @@ export default function SettingsScreen() {
           </TouchableOpacity>
 
           {/* License */}
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={openLicence}
             className="rounded-xl p-4 flex-row items-center gap-4"
             style={{ backgroundColor: accentColors.surface }}
             activeOpacity={0.7}
           >
             <Scale size={24} color={accentColors.subtext1} />
-            <ThemedView 
+            <ThemedView
               className="flex-1"
               style={{ backgroundColor: accentColors.surface }}
             >
-              <ThemedText 
-                type="bold" 
+              <ThemedText
+                type="bold"
                 className="mb-1"
                 style={{ color: accentColors.text }}
               >
                 License
               </ThemedText>
-              <ThemedText 
+              <ThemedText
                 className="text-sm"
                 style={{ color: accentColors.subtext0 }}
               >
@@ -190,45 +189,46 @@ export default function SettingsScreen() {
         </ThemedView>
 
         {/* About Section */}
-        <ThemedView 
+        <ThemedView
           className="mx-6 mb-8"
           style={{ backgroundColor: accentColors.base }}
         >
-          <ThemedText 
-            type="subtitle" 
+          <ThemedText
+            type="subtitle"
             className="mb-4"
             style={{ color: accentColors.text }}
           >
             About
           </ThemedText>
-          
-          <ThemedView 
+
+          <ThemedView
             className="rounded-xl p-4"
             style={{ backgroundColor: accentColors.surface }}
           >
-            <ThemedText 
+            <ThemedText
               className="leading-6"
               style={{ color: accentColors.subtext1 }}
             >
-              N-Recipe is an offline recipe management app designed for Android. 
-              Store and organize your favorite recipes locally on your device with 
-              support for system accent colors and dark mode.
+              N-Recipe is an offline recipe management app designed for Android.
+              Store and organize your favorite recipes locally on your device
+              with support for system accent colors and dark mode.
             </ThemedText>
-            <ThemedText 
+            <ThemedText
               className="leading-6 pt-2"
               style={{ color: accentColors.subtext1 }}
             >
-              If you want to find more catppuccin style apps, check out my github.
+              If you want to find more catppuccin style apps, check out my
+              github.
             </ThemedText>
           </ThemedView>
         </ThemedView>
 
         {/* Footer */}
-        <ThemedView 
+        <ThemedView
           className="items-center pt-4"
           style={{ backgroundColor: accentColors.base }}
         >
-          <ThemedText 
+          <ThemedText
             className="text-sm text-center"
             style={{ color: accentColors.subtext0 }}
           >

@@ -13,14 +13,14 @@ export function ThemedText({
   ...otherProps
 }: ThemedTextProps) {
   const accentColors = useAccentColors();
-    
+
   const typeClasses = {
-    default: '',
-    title: 'text-3xl font-bold',
-    bold: 'font-semibold',
-    subtitle: 'text-xl font-medium',
-    link: 'underline',
-    button: '',
+    default: "",
+    title: "text-3xl font-bold",
+    bold: "font-semibold",
+    subtitle: "text-xl font-medium",
+    link: "underline",
+    button: "",
   };
 
   const typeTextColors = {
@@ -31,12 +31,12 @@ export function ThemedText({
     link: accentColors.primary,
     button: accentColors.crust,
   };
-  
+
   return (
-    <Text 
-      style={{color: typeTextColors[type]}}
+    <Text
+      style={{ color: typeTextColors[type] }}
       className={cn(typeClasses[type], className)}
-      {...otherProps} 
+      {...otherProps}
     />
   );
 }

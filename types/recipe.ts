@@ -11,7 +11,7 @@ export type RecipeType = {
   steps: RecipeStepType[];
   createdAt: Date;
   updatedAt: Date;
-}
+};
 
 export type RecipeStepType = {
   name: string;
@@ -19,12 +19,17 @@ export type RecipeStepType = {
   description: string;
   duration: number; // in minutes
   ingredients: IngredientType[];
-}
+};
 
 export type IngredientType = {
   name: string;
   unit?: string;
   quantity?: number;
-}
+};
 
-export type RecipeCategoryType = "breakfast" | "lunch" | "dinner" | "snack" | "dessert";
+export type RecipeCategoryType =
+  | "breakfast"
+  | "lunch"
+  | "dinner"
+  | "snack"
+  | "dessert";

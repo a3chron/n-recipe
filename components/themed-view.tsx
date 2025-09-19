@@ -3,7 +3,7 @@ import { View, type ViewProps } from "react-native";
 
 export type ThemedViewProps = ViewProps & {
   className?: string;
-  type?: "bg" | "modal" | "button"
+  type?: "bg" | "modal" | "button";
 };
 
 export function ThemedView({
@@ -14,16 +14,16 @@ export function ThemedView({
   const accentColors = useAccentColors();
 
   const typeBgColor = {
-    "bg": accentColors.base,
-    "modal": accentColors.mantle,
-    "button": accentColors.crust,
-  }
-  
+    bg: accentColors.base,
+    modal: accentColors.mantle,
+    button: accentColors.crust,
+  };
+
   return (
-    <View 
-      style={{backgroundColor: typeBgColor[type]}} 
-      className={className} 
-      {...otherProps} 
+    <View
+      style={{ backgroundColor: typeBgColor[type] }}
+      className={className}
+      {...otherProps}
     />
   );
 }
