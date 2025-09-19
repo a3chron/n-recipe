@@ -1,0 +1,30 @@
+{
+  "settings": "Einstellungen",
+  "cook": {
+    "selectServings": "Anzahl Portionen",
+    "howManyServings": "Wie viele Portionen möchtest du machen?",
+    "originalServings": "Originalrezept serviert {{count}} Portionen",
+    "continue": "Weiter",
+    "ingredientsNeeded": "Benötigte Zutaten",
+    "servingsCount": "{{count}} Portionen",
+    "adjustedFrom": "Angepasst von {{original}} Portionen",
+    "shoppingList": "Einkaufsliste",
+    "beforeStarting": "Vor Beginn",
+    "prepareIngredients": "Vergewissern Sie sich, dass Sie alle Zutaten gemäß der obigen Liste bereit haben.",
+    "startCooking": "Mit Kochen beginnen",
+    "stepProgress": "Schritt {{current}} von {{total}}",
+    "minutes": "min",
+    "startTimer": "Timer starten",
+    "stopTimer": "Timer stoppen",
+    "timerFinished": "Timer fertig!",
+    "stepComplete": "{{stepName}} sollte jetzt fertig sein!",
+    "stepIngredients": "Für diesen Schritt",
+    "previous": "Zurück",
+    "nextStep": "Nächster Schritt",
+    "finish": "Rezept abschließen",
+    "recipeComplete": "Rezept fertig!",
+    "enjoyMeal": "Ihr Essen ist fertig. Guten Appetit!",
+    "backToRecipe": "Zurück zum Rezept",
+    "backToHome": "Zurück zur Startseite"
+  }
+}
