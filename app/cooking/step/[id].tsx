@@ -244,7 +244,7 @@ export default function CookingStepScreen() {
               >
                 {timeRemaining !== null
                   ? formatTime(timeRemaining)
-                  : `${currentStepData.duration} ${t("cook.minutes")}`}
+                  : `${currentStepData.duration} ${t("global.minutes")}`}
               </ThemedText>
             </ThemedView>
 

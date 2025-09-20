@@ -16,10 +16,12 @@ import {
   Plus,
 } from "lucide-react-native";
 import { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { RefreshControl, ScrollView, TouchableOpacity } from "react-native";
 
 type RecipeTypeItem = {
-  name: RecipeCategoryType;
+  name: string;
+  internal: RecipeCategoryType;
   icon: React.ReactNode;
 };
 
@@ -28,23 +30,32 @@ export default function HomeScreen() {
   const [isLoading, setIsLoading] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const accentColors = useAccentColors();
+  const { t } = useTranslation();
 
   const recipeTypes: RecipeTypeItem[] = [
     {
-      name: "breakfast",
+      name: t("global.breakfast"),
+      internal: "breakfast",
       icon: <EggFried size={44} color={accentColors.primary} />,
     },
     {
-      name: "lunch",
+      name: t("global.lunch"),
+      internal: "lunch",
       icon: <CookingPot size={44} color={accentColors.primary} />,
     },
-    { name: "dinner", icon: <Pizza size={44} color={accentColors.primary} /> },
     {
-      name: "snack",
+      name: t("global.dinner"),
+      internal: "dinner",
+      icon: <Pizza size={44} color={accentColors.primary} />,
+    },
+    {
+      name: t("global.snack"),
+      internal: "snack",
       icon: <Croissant size={44} color={accentColors.primary} />,
     },
     {
-      name: "dessert",
+      name: t("global.dessert"),
+      internal: "dessert",
       icon: <CakeSlice size={44} color={accentColors.primary} />,
     },
   ];
@@ -52,11 +63,7 @@ export default function HomeScreen() {
   const loadFavorites = async () => {
     setIsLoading(true);
     const recipes = await StorageService.getFavoriteRecipes();
-    // Sort by most recent and take first 5 as favorites
-    const recent = recipes
-      .sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())
-      .slice(0, 5);
-    setFavoriteRecipes(recent);
+    setFavoriteRecipes(recipes);
     setIsLoading(false);
   };
 
@@ -84,21 +91,26 @@ export default function HomeScreen() {
         contentContainerStyle={{ paddingBottom: 76 }}
       >
         <ThemedText type="title" className="mb-2">
-          Types
+          {t("home.types")}
         </ThemedText>
         <ThemedText className="mb-6 opacity-70">
-          Select one of the recipe types:
+          {t("home.selectType")}
         </ThemedText>
         <ThemedView className="flex flex-row flex-wrap items-center justify-center gap-4 mb-8 bg-transparent">
           {recipeTypes.map((type) => (
-            <RecipeType key={type.name} category={type.name} icon={type.icon} />
+            <RecipeType
+              key={type.name}
+              category={type.internal}
+              name={type.name}
+              icon={type.icon}
+            />
           ))}
         </ThemedView>
         <ThemedText type="title" className="mb-2">
-          Favorites
+          {t("home.favorites")}
         </ThemedText>
         <ThemedText className="mb-6 opacity-70">
-          Your recently added recipes:
+          {t("home.favoriteRecipes")}
         </ThemedText>
         <ThemedView className="flex flex-col gap-4 bg-transparent">
           {favoriteRecipes.length > 0 ? (
@@ -107,9 +119,7 @@ export default function HomeScreen() {
             ))
           ) : (
             <ThemedText className="text-center opacity-50 py-8">
-              {isLoading
-                ? "Loading favorite recipes..."
-                : "No recipes yet. Add your first recipe!"}
+              {isLoading ? t("home.loadingFavRecipes") : t("home.noFavRecipes")}
             </ThemedText>
           )}
         </ThemedView>

@@ -53,7 +53,7 @@ export default function SettingsScreen() {
           style={{ backgroundColor: accentColors.base }}
         >
           <ThemedText type="title" style={{ color: accentColors.text }}>
-            {t("settings")}
+            {t("settings.settings")}
           </ThemedText>
         </ThemedView>
 
@@ -67,7 +67,7 @@ export default function SettingsScreen() {
             className="mb-4"
             style={{ color: accentColors.text }}
           >
-            Customization
+            {t("settings.customization")}
           </ThemedText>
 
           <TouchableOpacity
@@ -86,13 +86,13 @@ export default function SettingsScreen() {
                 className="mb-1"
                 style={{ color: accentColors.text }}
               >
-                Appearance
+                {t("settings.appearance")}
               </ThemedText>
               <ThemedText
                 className="text-sm"
                 style={{ color: accentColors.subtext0 }}
               >
-                Customize accent colors and theme
+                {t("settings.customizeTheme")}
               </ThemedText>
             </ThemedView>
             <ChevronRight size={20} color={accentColors.subtext0} />
@@ -109,7 +109,7 @@ export default function SettingsScreen() {
             className="mb-4"
             style={{ color: accentColors.text }}
           >
-            App Information
+            {t("settings.appInformation")}
           </ThemedText>
 
           <ThemedView
@@ -120,7 +120,7 @@ export default function SettingsScreen() {
               className="mb-1"
               style={{ color: accentColors.subtext0 }}
             >
-              Version
+              {t("settings.version")}
             </ThemedText>
             <ThemedText type="bold" style={{ color: accentColors.text }}>
               {versionInfo.formatted}
@@ -138,7 +138,7 @@ export default function SettingsScreen() {
             className="mb-4"
             style={{ color: accentColors.text }}
           >
-            Links & Legal
+            {t("settings.linksAndLegal")}
           </ThemedText>
 
           {/* GitHub Repository */}
@@ -158,13 +158,13 @@ export default function SettingsScreen() {
                 className="mb-1"
                 style={{ color: accentColors.text }}
               >
-                GitHub Repository
+                {t("settings.repo")}
               </ThemedText>
               <ThemedText
                 className="text-sm"
                 style={{ color: accentColors.subtext0 }}
               >
-                View source code and contribute
+                {t("settings.viewSourceCode")}
               </ThemedText>
             </ThemedView>
             <ChevronRight size={20} color={accentColors.subtext0} />
@@ -187,13 +187,13 @@ export default function SettingsScreen() {
                 className="mb-1"
                 style={{ color: accentColors.text }}
               >
-                Crowdin Translations
+                {t("settings.translations")}
               </ThemedText>
               <ThemedText
                 className="text-sm"
                 style={{ color: accentColors.subtext0 }}
               >
-                Help translate this app to your language
+                {t("settings.helpTranslate")}
               </ThemedText>
             </ThemedView>
             <ChevronRight size={20} color={accentColors.subtext0} />
@@ -216,13 +216,13 @@ export default function SettingsScreen() {
                 className="mb-1"
                 style={{ color: accentColors.text }}
               >
-                License
+                {t("settings.license")}
               </ThemedText>
               <ThemedText
                 className="text-sm"
                 style={{ color: accentColors.subtext0 }}
               >
-                View license information
+                {t("settings.viewLicense")}
               </ThemedText>
             </ThemedView>
             <ChevronRight size={20} color={accentColors.subtext0} />
@@ -239,7 +239,7 @@ export default function SettingsScreen() {
             className="mb-4"
             style={{ color: accentColors.text }}
           >
-            About
+            {t("settings.about")}
           </ThemedText>
 
           <ThemedView
@@ -250,16 +250,13 @@ export default function SettingsScreen() {
               className="leading-6"
               style={{ color: accentColors.subtext1 }}
             >
-              N-Recipe is an offline recipe management app designed for Android.
-              Store and organize your favorite recipes locally on your device
-              with support for system accent colors and dark mode.
+              {t("settings.appDescription")}
             </ThemedText>
             <ThemedText
               className="leading-6 pt-2"
               style={{ color: accentColors.subtext1 }}
             >
-              If you want to find more catppuccin style apps, check out my
-              github.
+              {t("settings.moreCatppuccin")}
             </ThemedText>
           </ThemedView>
         </ThemedView>
@@ -273,7 +270,7 @@ export default function SettingsScreen() {
             className="text-sm text-center"
             style={{ color: accentColors.subtext0 }}
           >
-            Made with ❤️ for cooking enthusiasts
+            {t("settings.madeWithLove")}
           </ThemedText>
         </ThemedView>
       </ScrollView>

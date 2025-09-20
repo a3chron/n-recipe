@@ -1,5 +1,39 @@
 {
-  "settings": "Settings",
+  "global": {
+    "minutes": "min",
+    "breakfast": "Breakfast",
+    "lunch": "Lunch",
+    "dinner": "Dinner",
+    "snack": "Snack",
+    "dessert": "Dessert"
+  },
+  "settings": {
+    "settings": "Settings",
+    "customization": "Customization",
+    "appearance": "Appearance",
+    "customizeTheme": "Customize accent colors and theme",
+    "appInformation": "App Information",
+    "version": "Version",
+    "linksAndLegal": "Links & Legal",
+    "repo": "GitHub Repository",
+    "viewSourceCode": "View source code and contribute",
+    "translations": "Crowdin Translations",
+    "helpTranslate": "Help translate this app to your language",
+    "license": "License",
+    "viewLicense": "View license information",
+    "about": "About",
+    "appDescription": "N-Recipe is an offline recipe management app designed for Android. Store and organize your favorite recipes locally on your device with support for system accent colors and dark mode.",
+    "moreCatppuccin": "If you want to find more catppuccin style apps, check out my github.",
+    "madeWithLove": "Made with ❤️ for cooking enthusiasts"
+  },
+  "home": {
+    "types": "Types",
+    "selectType": "Select one of the recipes types:",
+    "favorites": "Favorites",
+    "favoriteRecipes": "Your favorite recipes:",
+    "loadingFavRecipes": "Loading favorite recipes...",
+    "noFavRecipes": "No favorite recipes yet."
+  },
   "cook": {
     "selectServings": "Select Servings",
     "howManyServings": "How many servings would you like to make?",
@@ -13,7 +47,6 @@
     "prepareIngredients": "Make sure you have all ingredients ready according to the list above.",
     "startCooking": "Start Cooking",
     "stepProgress": "Step {{current}} of {{total}}",
-    "minutes": "min",
     "startTimer": "Start Timer",
     "stopTimer": "Stop Timer",
     "timerFinished": "Timer Finished!",

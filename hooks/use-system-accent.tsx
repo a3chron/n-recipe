@@ -133,22 +133,19 @@ function getNothingColors(isDark: boolean): AccentColors {
   };
 }
 
-function generateSystemColors(
-  materialColors: Material3Scheme,
-  isDark: boolean,
-): AccentColors {
+function generateSystemColors(materialColors: Material3Scheme): AccentColors {
   return {
     primary: materialColors.primary,
     secondary: materialColors.secondary,
     tertiary: materialColors.tertiary,
-    surface: materialColors.surface,
+    surface: materialColors.surfaceDim,
     onSurface: materialColors.onSurface,
     base: materialColors.background,
-    mantle: materialColors.surfaceContainerLow,
+    mantle: materialColors.secondaryContainer,
     crust: materialColors.surfaceContainerLowest,
     text: materialColors.onSurface,
     subtext0: materialColors.onSurfaceDisabled,
-    subtext1: isDark ? materialColors.surfaceBright : materialColors.surfaceDim,
+    subtext1: materialColors.onSurfaceVariant,
   };
 }
 
@@ -201,7 +198,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
       case "system":
         if (material3Result) {
           const currentTheme = material3Result.theme[colorScheme ?? "light"];
-          setColors(generateSystemColors(currentTheme, isDark));
+          setColors(generateSystemColors(currentTheme));
         } else {
           // Fallback to Nothing theme if Material3 is not available
           setColors(getNothingColors(isDark));

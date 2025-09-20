@@ -11,9 +11,11 @@ const navigateToFilteredRecipes = (category: RecipeCategoryType) => {
 };
 
 export default function RecipeType({
+  name,
   category,
   icon,
 }: {
+  name: string;
   category: RecipeCategoryType;
   icon: React.ReactNode;
 }) {
@@ -34,7 +36,7 @@ export default function RecipeType({
         className="font-medium capitalize"
         style={{ color: accentClasses.primary }}
       >
-        {category}
+        {name}
       </Text>
     </TouchableOpacity>
   );

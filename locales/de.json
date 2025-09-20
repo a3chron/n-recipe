@@ -1,5 +1,39 @@
 {
-  "settings": "Einstellungen",
+  "global": {
+    "minutes": "min",
+    "breakfast": "Frühstück",
+    "lunch": "Mittagessen",
+    "dinner": "Abendessen",
+    "snack": "Snack",
+    "dessert": "Dessert"
+  },
+  "settings": {
+    "settings": "Einstellungen",
+    "customization": "Individualisierung",
+    "appearance": "Darstellung",
+    "customizeTheme": "Akzentfarben und Design anpassen",
+    "appInformation": "App-Informationen",
+    "version": "Version",
+    "linksAndLegal": "Links & rechtliches",
+    "repo": "GitHub Repository",
+    "viewSourceCode": "Quellcode ansehen und beitragen",
+    "translations": "Crowdin Übersetzungen",
+    "helpTranslate": "Hilf dabei, diese App in deine Sprache zu übersetzen",
+    "license": "Lizenz",
+    "viewLicense": "Lizenzinformationen ansehen",
+    "about": "Über n-recipe",
+    "appDescription": "N-Rezept ist eine Offline-Rezept-Management-App für Android. Speichern und organisieren Sie Ihre Lieblings-Rezepte lokal auf Ihrem Gerät mit Unterstützung für System-Akzentfarben und Dunkelmodus.",
+    "moreCatppuccin": "Wenn du mehr Catppuccin Apps finden möchtest, schau dir mein Github an.",
+    "madeWithLove": "Hergestellt mit ❤️ für Kochenthusiasten"
+  },
+  "home": {
+    "types": "Kategorien",
+    "selectType": "Wählen Sie einen Rezepttyp:",
+    "favorites": "Favoriten",
+    "favoriteRecipes": "Deine Lieblingsrezepte:",
+    "loadingFavRecipes": "Lieblingsrezepte werden geladen...",
+    "noFavRecipes": "Noch keine Lieblingsrezepte."
+  },
   "cook": {
     "selectServings": "Anzahl Portionen",
     "howManyServings": "Wie viele Portionen möchtest du machen?",
@@ -10,10 +44,9 @@
     "adjustedFrom": "Angepasst von {{original}} Portionen",
     "shoppingList": "Einkaufsliste",
     "beforeStarting": "Vor Beginn",
-    "prepareIngredients": "Vergewissern Sie sich, dass Sie alle Zutaten gemäß der obigen Liste bereit haben.",
+    "prepareIngredients": "Vergewissere dich, dass du alle Zutaten gemäß der obigen Liste bereit hast.",
     "startCooking": "Mit Kochen beginnen",
     "stepProgress": "Schritt {{current}} von {{total}}",
-    "minutes": "min",
     "startTimer": "Timer starten",
     "stopTimer": "Timer stoppen",
     "timerFinished": "Timer fertig!",
