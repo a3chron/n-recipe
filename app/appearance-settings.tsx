@@ -1,5 +1,6 @@
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
+import { CATPPUCCIN_LATTE, CATPPUCCIN_MOCHA } from "@/constants/theme-colors";
 import {
   CATPPUCCIN_ACCENT_OPTIONS,
   ThemeMode,
@@ -169,39 +170,6 @@ export default function AppearanceSettingsScreen() {
   // Get the actual color values for Catppuccin colors based on current theme
   const getCatppuccinColorValue = (colorKey: string) => {
     const isDark = colorScheme === "dark";
-    const CATPPUCCIN_LATTE = {
-      rosewater: "#dc8a78",
-      flamingo: "#dd7878",
-      pink: "#ea76cb",
-      mauve: "#8839ef",
-      red: "#d20f39",
-      maroon: "#e64553",
-      peach: "#fe640b",
-      yellow: "#df8e1d",
-      green: "#40a02b",
-      teal: "#179299",
-      sky: "#04a5e5",
-      sapphire: "#209fb5",
-      blue: "#1e66f5",
-      lavender: "#7287fd",
-    };
-
-    const CATPPUCCIN_MOCHA = {
-      rosewater: "#f5e0dc",
-      flamingo: "#f2cdcd",
-      pink: "#f5c2e7",
-      mauve: "#cba6f7",
-      red: "#f38ba8",
-      maroon: "#eba0ac",
-      peach: "#fab387",
-      yellow: "#f9e2af",
-      green: "#a6e3a1",
-      teal: "#94e2d5",
-      sky: "#89dceb",
-      sapphire: "#74c7ec",
-      blue: "#89b4fa",
-      lavender: "#b4befe",
-    };
 
     const palette = isDark ? CATPPUCCIN_MOCHA : CATPPUCCIN_LATTE;
     return palette[colorKey as keyof typeof palette] || palette.mauve;

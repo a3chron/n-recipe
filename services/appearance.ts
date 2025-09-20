@@ -12,17 +12,6 @@ const DEFAULT_SETTINGS: AppearanceSettings = {
   catppuccinAccent: "mauve",
 };
 
-export const ACCENT_COLOR_OPTIONS = [
-  { name: "Red", value: "#C8102E" },
-  { name: "Blue", value: "#1976D2" },
-  { name: "Green", value: "#388E3C" },
-  { name: "Purple", value: "#7B1FA2" },
-  { name: "Orange", value: "#F57C00" },
-  { name: "Teal", value: "#00796B" },
-  { name: "Pink", value: "#C2185B" },
-  { name: "Indigo", value: "#303F9F" },
-];
-
 export class AppearanceService {
   static async getSettings(): Promise<AppearanceSettings> {
     try {

@@ -1,0 +1,19 @@
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
+
+# Expo / RN
+.expo
+.expo-shared
+
+# Native builds
+android
+build
+dist
+.gradle
+
+# OS / IDE
+.DS_Store
+.idea
+.vscode

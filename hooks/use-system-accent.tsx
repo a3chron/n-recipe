@@ -1,4 +1,6 @@
+import { CATPPUCCIN_LATTE, CATPPUCCIN_MOCHA } from "@/constants/theme-colors";
 import { AppearanceService, AppearanceSettings } from "@/services/appearance";
+import { Material3Scheme, Material3Theme } from "@/types/material";
 import {
   createContext,
   ReactNode,
@@ -7,6 +9,12 @@ import {
   useState,
 } from "react";
 import { useColorScheme } from "react-native";
+
+type Material3ThemeResult = {
+  theme: Material3Theme;
+  updateTheme: (sourceColor: string) => void;
+  resetTheme: () => void;
+};
 
 // For when Material3 theme is available
 let useMaterial3Theme: any = null;
@@ -40,57 +48,6 @@ interface ThemeContextType {
   updateSettings: (settings: Partial<AppearanceSettings>) => Promise<void>;
   refreshTheme: () => Promise<void>;
 }
-
-// Catppuccin color palettes
-const CATPPUCCIN_LATTE = {
-  base: "#eff1f5",
-  mantle: "#e6e9ef",
-  crust: "#dce0e8",
-  text: "#4c4f69",
-  subtext0: "#6c6f85",
-  subtext1: "#5c5f77",
-  surface: "#ccd0da",
-  onSurface: "#4c4f69",
-  rosewater: "#dc8a78",
-  flamingo: "#dd7878",
-  pink: "#ea76cb",
-  mauve: "#8839ef",
-  red: "#d20f39",
-  maroon: "#e64553",
-  peach: "#fe640b",
-  yellow: "#df8e1d",
-  green: "#40a02b",
-  teal: "#179299",
-  sky: "#04a5e5",
-  sapphire: "#209fb5",
-  blue: "#1e66f5",
-  lavender: "#7287fd",
-};
-
-const CATPPUCCIN_MOCHA = {
-  base: "#1e1e2e",
-  mantle: "#181825",
-  crust: "#11111b",
-  text: "#cdd6f4",
-  subtext0: "#a6adc8",
-  subtext1: "#bac2de",
-  surface: "#313244",
-  onSurface: "#cdd6f4",
-  rosewater: "#f5e0dc",
-  flamingo: "#f2cdcd",
-  pink: "#f5c2e7",
-  mauve: "#cba6f7",
-  red: "#f38ba8",
-  maroon: "#eba0ac",
-  peach: "#fab387",
-  yellow: "#f9e2af",
-  green: "#a6e3a1",
-  teal: "#94e2d5",
-  sky: "#89dceb",
-  sapphire: "#74c7ec",
-  blue: "#89b4fa",
-  lavender: "#b4befe",
-};
 
 export const CATPPUCCIN_ACCENT_OPTIONS = [
   { name: "Rosewater", value: "rosewater" },
@@ -177,7 +134,7 @@ function getNothingColors(isDark: boolean): AccentColors {
 }
 
 function generateSystemColors(
-  materialColors: any,
+  materialColors: Material3Scheme,
   isDark: boolean,
 ): AccentColors {
   return {
@@ -186,12 +143,12 @@ function generateSystemColors(
     tertiary: materialColors.tertiary,
     surface: materialColors.surface,
     onSurface: materialColors.onSurface,
-    base: isDark ? "#1C1C1C" : "#FFFFFF",
-    mantle: isDark ? "#0F0F0F" : "#F5F5F5",
-    crust: isDark ? "#141414" : "#E5E5E5",
-    text: isDark ? "#E5E5E5" : "#1C1C1C",
-    subtext0: isDark ? "#A3A3A3" : "#525252",
-    subtext1: isDark ? "#D4D4D4" : "#404040",
+    base: materialColors.background,
+    mantle: materialColors.surfaceContainerLow,
+    crust: materialColors.surfaceContainerLowest,
+    text: materialColors.onSurface,
+    subtext0: materialColors.onSurfaceDisabled,
+    subtext1: isDark ? materialColors.surfaceBright : materialColors.surfaceDim,
   };
 }
 
@@ -214,7 +171,7 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
   );
 
   // Try to use Material3 theme if available
-  const material3Result = useMaterial3Theme
+  const material3Result: Material3ThemeResult = useMaterial3Theme
     ? useMaterial3Theme({
         fallbackSourceColor: "#3B82F6",
       })
