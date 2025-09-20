@@ -1,4 +1,3 @@
-// app/add-recipe.tsx
 import { ThemedText } from "@/components/themed-text";
 import { ThemedView } from "@/components/themed-view";
 import { useAccentColors } from "@/hooks/use-system-accent";
@@ -27,14 +26,23 @@ const categories: RecipeCategoryType[] = [
   "dessert",
 ];
 
+interface StepWithStringDuration extends Omit<RecipeStepType, 'duration' | 'ingredients'> {
+  duration: string;
+  ingredients: IngredientWithStringQuantity[];
+}
+
+interface IngredientWithStringQuantity extends Omit<IngredientType, 'quantity'> {
+  quantity: string;
+}
+
 export default function AddRecipeScreen() {
   const [title, setTitle] = useState("");
-  const [servings, setServings] = useState(0);
+  const [servings, setServings] = useState("");
   const [selectedCategory, setSelectedCategory] =
     useState<RecipeCategoryType>("dinner");
   const [saving, setSaving] = useState(false);
-  const [steps, setSteps] = useState<RecipeStepType[]>([
-    { name: "", order: 1, description: "", ingredients: [], duration: 0 },
+  const [steps, setSteps] = useState<StepWithStringDuration[]>([
+    { name: "", order: 1, description: "", ingredients: [], duration: "" },
   ]);
   const accentColors = useAccentColors();
 
@@ -49,7 +57,7 @@ export default function AddRecipeScreen() {
         order: steps.length + 1,
         description: "",
         ingredients: [],
-        duration: 0,
+        duration: "",
       },
     ]);
   };
@@ -68,7 +76,7 @@ export default function AddRecipeScreen() {
 
   const updateStep = (
     index: number,
-    field: keyof RecipeStepType,
+    field: keyof StepWithStringDuration,
     value: any,
   ) => {
     const newSteps = [...steps];
@@ -78,7 +86,7 @@ export default function AddRecipeScreen() {
 
   const addIngredient = (stepIndex: number) => {
     const newSteps = [...steps];
-    newSteps[stepIndex].ingredients.push({ name: "", unit: "", quantity: 0 });
+    newSteps[stepIndex].ingredients.push({ name: "", unit: "", quantity: "" });
     setSteps(newSteps);
   };
 
@@ -93,7 +101,7 @@ export default function AddRecipeScreen() {
   const updateIngredient = (
     stepIndex: number,
     ingredientIndex: number,
-    field: keyof IngredientType,
+    field: keyof IngredientWithStringQuantity,
     value: any,
   ) => {
     const newSteps = [...steps];
@@ -119,9 +127,16 @@ export default function AddRecipeScreen() {
     try {
       await StorageService.saveRecipe({
         title: title.trim(),
-        servings,
+        servings: Number(servings) || 0,
         category: selectedCategory,
-        steps,
+        steps: steps.map(step => ({
+          ...step,
+          duration: Number(step.duration) || 0,
+          ingredients: step.ingredients.map(ing => ({
+            ...ing,
+            quantity: Number(ing.quantity) || 0
+          }))
+        })),
       });
 
       Alert.alert("Success", "Recipe saved successfully!", [
@@ -173,12 +188,15 @@ export default function AddRecipeScreen() {
           <ThemedView className="mb-6 bg-transparent">
             <ThemedText className="mb-2 font-semibold">Servings *</ThemedText>
             <TextInput
-              value={servings.toString()}
-              onChangeText={(value) =>
-                (value === "" || parseFloat(value) >= 0) &&
-                setServings(parseFloat(value) || 0)
-              }
+              value={servings}
+              onChangeText={(value) => {
+                // Allow empty string or valid positive numbers
+                if (value === "" || (!isNaN(Number(value)) && Number(value) >= 0)) {
+                  setServings(value);
+                }
+              }}
               placeholder="For how many people is this intended"
+              keyboardType="numeric"
               className="border rounded-xl p-4"
               style={inputStyle}
               placeholderTextColor={accentColors.subtext0}
@@ -263,11 +281,12 @@ export default function AddRecipeScreen() {
                 />
 
                 <TextInput
-                  value={step.duration.toString()}
-                  onChangeText={(value) =>
-                    (value === "" || parseFloat(value) >= 0) &&
-                    updateStep(stepIndex, "duration", parseFloat(value) || 0)
-                  }
+                  value={step.duration}
+                  onChangeText={(value) => {
+                    if (value === "" || (!isNaN(Number(value)) && Number(value) >= 0)) {
+                      updateStep(stepIndex, "duration", value);
+                    }
+                  }}
                   placeholder="Step duration in minutes"
                   keyboardType="numeric"
                   className="border rounded-lg p-3 mb-4"
@@ -309,16 +328,17 @@ export default function AddRecipeScreen() {
                         placeholderTextColor={accentColors.subtext0}
                       />
                       <TextInput
-                        value={(ingredient.quantity ?? 0).toString()}
-                        onChangeText={(value) =>
-                          (value === "" || parseFloat(value) >= 0) &&
-                          updateIngredient(
-                            stepIndex,
-                            ingredientIndex,
-                            "quantity",
-                            parseFloat(value) || 0,
-                          )
-                        }
+                        value={ingredient.quantity}
+                        onChangeText={(value) => {
+                          if (value === "" || (!isNaN(Number(value)) && Number(value) >= 0)) {
+                            updateIngredient(
+                              stepIndex,
+                              ingredientIndex,
+                              "quantity",
+                              value,
+                            );
+                          }
+                        }}
                         placeholder="Amount"
                         keyboardType="numeric"
                         className="w-20 border rounded-lg p-2"
